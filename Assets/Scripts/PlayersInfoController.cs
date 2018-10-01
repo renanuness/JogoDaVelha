@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayersInfoController : MonoBehaviour {
+using UnityEngine.Networking;
 
 
+public class PlayersInfoController : NetworkBehaviour
+{
     public Dropdown p1Commander;
     public Dropdown p2Commander;
     public Image p1SymbolImage;
@@ -67,21 +69,9 @@ public class PlayersInfoController : MonoBehaviour {
 
     public void ToggleSymbol()
     {
-        if(PlayersInfo.p1Symbol == Symbol.CIRCLE)
+        if (isServer)
         {
-            PlayersInfo.p1Symbol = Symbol.CROSS;
-            PlayersInfo.p2Symbol = Symbol.CIRCLE;
-            p1SymbolImage.GetComponent<Image>().sprite= crossSprite;
-            p2SymbolImage.GetComponent<Image>().sprite = circleSprite;
-
-        }
-        else
-        {
-            PlayersInfo.p1Symbol = Symbol.CIRCLE;
-            PlayersInfo.p2Symbol = Symbol.CROSS;
-            p1SymbolImage.GetComponent<Image>().sprite = circleSprite;
-            p2SymbolImage.GetComponent<Image>().sprite = crossSprite;
-
+            CmdUpdateUIData();
         }
     }
 
@@ -97,6 +87,37 @@ public class PlayersInfoController : MonoBehaviour {
     private void CleanName(ref string name)
     {
         name = null;
+    }
+
+
+    //COMMANDS
+
+    [Command]
+    void CmdUpdateUIData()
+    {
+        if (PlayersInfo.p1Symbol == Symbol.CIRCLE)
+        {
+            PlayersInfo.p1Symbol = Symbol.CROSS;
+            PlayersInfo.p2Symbol = Symbol.CIRCLE;
+            p1SymbolImage.GetComponent<Image>().sprite = crossSprite;
+            p2SymbolImage.GetComponent<Image>().sprite = circleSprite;
+
+        }
+        else
+        {
+            PlayersInfo.p1Symbol = Symbol.CIRCLE;
+            PlayersInfo.p2Symbol = Symbol.CROSS;
+            p1SymbolImage.GetComponent<Image>().sprite = circleSprite;
+            p2SymbolImage.GetComponent<Image>().sprite = crossSprite;
+
+        }
+    }
+
+    //RPC
+    [ClientRpc]
+    void RpcUpdateUIData()
+    {
+
     }
 }
 
@@ -119,5 +140,6 @@ public static class PlayersInfo
         }
         return erroMSG;
     }
+
 
 }

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MP_NetworkManager : NetworkManager
+public class MyNetworkManager : NetworkManager
 {
+
     public static event Action<NetworkConnection> onServerConnect;
 
     public static NetworkDiscovery Discovery
@@ -16,6 +17,15 @@ public class MP_NetworkManager : NetworkManager
         }
     }
 
+    // Use this for initialization
+    void Start () {
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
     public override void OnServerConnect(NetworkConnection conn)
     {
         if (conn.address == "localClient")
@@ -23,15 +33,12 @@ public class MP_NetworkManager : NetworkManager
             return;
         }
 
-        if(onServerConnect != null)
+        Debug.Log("Client connected! Address: " + conn.address);
+
+        if (onServerConnect != null)
         {
             onServerConnect(conn);
         }
-    }
-
-    public override void OnClientError(NetworkConnection conn, int errorCode)
-    {
-        base.OnClientError(conn, errorCode);
     }
 
 }

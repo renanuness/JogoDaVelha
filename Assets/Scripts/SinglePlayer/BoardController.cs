@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BoardController : MonoBehaviour {
+public class BoardController : NetworkBehaviour {
 
 
     public  Sprite _circleSprite;
     public Sprite _crossSprite;
+
     public int[] board = new int[9];
+
     public Animation endGameAnimation;
     public UIManager uiManager;
 

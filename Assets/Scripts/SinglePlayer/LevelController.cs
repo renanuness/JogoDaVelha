@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 
 public enum Symbol
 {
@@ -188,7 +188,7 @@ public static class Factory
 
 }
 
-public class LevelController : MonoBehaviour {
+public class LevelController : NetworkBehaviour {
 
 
     public IPlayer _playerToPlay;

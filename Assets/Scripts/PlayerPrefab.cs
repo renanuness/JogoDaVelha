@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MP_UIManager : MonoBehaviour {
+public class PlayerPrefab : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
