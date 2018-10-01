@@ -26,7 +26,6 @@ public class PlayersInfoController : NetworkBehaviour
         PlayersInfo.p2Commander = Commander.HUMAN;
         PlayersInfo.p1Symbol = Symbol.CIRCLE;
         PlayersInfo.p2Symbol = Symbol.CROSS;
-
     }
 
     public void SetPlayerOneCommander()
@@ -69,9 +68,13 @@ public class PlayersInfoController : NetworkBehaviour
 
     public void ToggleSymbol()
     {
-        if (isServer)
+        if (isLocalPlayer)
         {
             CmdUpdateUIData();
+        }
+        if (isServer)
+        {
+            RpcUpdateUIData();
         }
     }
 
@@ -79,6 +82,7 @@ public class PlayersInfoController : NetworkBehaviour
     {
         PlayersInfo.p1Name = p1InputField.text;
     }
+
     public void SetPlayTwoName()
     {
         PlayersInfo.p2Name = p2InputField.text;
@@ -117,7 +121,22 @@ public class PlayersInfoController : NetworkBehaviour
     [ClientRpc]
     void RpcUpdateUIData()
     {
+        if (PlayersInfo.p1Symbol == Symbol.CIRCLE)
+        {
+            PlayersInfo.p1Symbol = Symbol.CROSS;
+            PlayersInfo.p2Symbol = Symbol.CIRCLE;
+            p1SymbolImage.GetComponent<Image>().sprite = crossSprite;
+            p2SymbolImage.GetComponent<Image>().sprite = circleSprite;
 
+        }
+        else
+        {
+            PlayersInfo.p1Symbol = Symbol.CIRCLE;
+            PlayersInfo.p2Symbol = Symbol.CROSS;
+            p1SymbolImage.GetComponent<Image>().sprite = circleSprite;
+            p2SymbolImage.GetComponent<Image>().sprite = crossSprite;
+
+        }
     }
 }
 

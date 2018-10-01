@@ -3186,7 +3186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 201724980}
-        m_MethodName: CallCmdToggleSymbol
+        m_MethodName: ToggleSymbol
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
