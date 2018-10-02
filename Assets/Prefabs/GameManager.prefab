@@ -9,55 +9,55 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1216383842204552}
+  m_RootGameObject: {fileID: 1408242930548610}
   m_IsPrefabAsset: 1
---- !u!1 &1216383842204552
+--- !u!1 &1408242930548610
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4133026195370812}
-  - component: {fileID: 114930148825667902}
-  - component: {fileID: 114674110362255212}
+  - component: {fileID: 4550950031188456}
+  - component: {fileID: 114056132177134994}
+  - component: {fileID: 114190217881557616}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4133026195370812
+--- !u!4 &4550950031188456
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1216383842204552}
+  m_GameObject: {fileID: 1408242930548610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.493334, y: 4.666667, z: 90}
+  m_LocalPosition: {x: -3.4429913, y: 1.2078964, z: 89.903114}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114674110362255212
+--- !u!114 &114056132177134994
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1216383842204552}
+  m_GameObject: {fileID: 1408242930548610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6ab4247c555b946b288baa384bf318, type: 3}
+  m_Script: {fileID: 11500000, guid: 456106d0c0fc941448b031320083c782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114930148825667902
+--- !u!114 &114190217881557616
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1216383842204552}
+  m_GameObject: {fileID: 1408242930548610}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
@@ -66,21 +66,21 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 63
-    i1: 30
-    i2: 159
-    i3: 76
-    i4: 225
-    i5: 182
-    i6: 137
-    i7: 36
-    i8: 137
-    i9: 80
-    i10: 67
-    i11: 117
-    i12: 171
-    i13: 83
+    i0: 139
+    i1: 242
+    i2: 63
+    i3: 228
+    i4: 46
+    i5: 116
+    i6: 187
+    i7: 68
+    i8: 154
+    i9: 244
+    i10: 39
+    i11: 173
+    i12: 91
+    i13: 60
     i14: 193
-    i15: 247
+    i15: 207
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0

@@ -125,10 +125,10 @@ public class HumanPlayer : Player
     public override void Play()
     {
         //GetCLick
+        
         if (_owner.isGameOver) { return;  }
         if(BoardController.Instance.GetEmptys() == 0){
             BoardController.Instance.EndGame();
-
             return;
         }
         if(Input.GetMouseButtonDown(0))
@@ -138,7 +138,6 @@ public class HumanPlayer : Player
                 RaycastHit2D hit = Physics2D.Linecast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Input.mousePosition);
                 if(hit.collider.gameObject != null)
                 {
-
                     if(BoardController.Instance.MakeMove(BoardController.Instance.SquareToPosition(hit.collider.gameObject), Symbol))
                     {
                         Symbol winner;
@@ -147,16 +146,11 @@ public class HumanPlayer : Player
                             //win;
                             BoardController.Instance.EndGame(this);
                             _owner.isGameOver = true;
-
                         }
                         _owner.ChangePlayer();
-
                     }
-
                 }
-
             }
-
         }
     }
 }
@@ -185,37 +179,54 @@ public static class Factory
         }
         return null;
     }
-
 }
 
 public class LevelController : NetworkBehaviour {
 
-
+    
     public IPlayer _playerToPlay;
     public bool isGameOver;
+    public PlayerPrefab _playerPrefab;
 
-	private void Start () {
+    private void Start ()
+    {
         InstantiatePlayers();
         isGameOver = false;
-	}
+    }
 
-
-
-	private void InstantiatePlayers()
+    private void InstantiatePlayers()
     {
         Players.PlayerOne = Factory.CreatePlayer(this, PlayersInfo.p1Commander, PlayersInfo.p1Symbol, PlayersInfo.p1Name);
         Players.PlayerTwo = Factory.CreatePlayer(this, PlayersInfo.p2Commander, PlayersInfo.p2Symbol, PlayersInfo.p2Name);
         _playerToPlay = Players.PlayerOne;
     }
 
-    // Update is called once per frame
-    private void Update () {
-        _playerToPlay.Play();
-	}
+    private void Update ()
+    {
+        if(_playerPrefab == null)
+        {
+            _playerPrefab = FindObjectOfType<PlayerPrefab>();
+        }
+       if(_playerPrefab._player != null && _playerPrefab._player == _playerToPlay)
+        {
+            _playerToPlay.Play();
+        }
+    }
 
     public void ChangePlayer()
     {
-        if(_playerToPlay == Players.PlayerOne)
+        if (isServer)
+        {
+            RpcChangePlayer();
+            return;
+        }
+        CmdChangePlayer();
+    }
+
+    //Command
+    [Command]
+    void CmdChangePlayer(){
+        if (_playerToPlay == Players.PlayerOne)
         {
             _playerToPlay = Players.PlayerTwo;
         }
@@ -225,5 +236,16 @@ public class LevelController : NetworkBehaviour {
         }
     }
 
-
+    [ClientRpc]
+    void RpcChangePlayer()
+    {
+        if (_playerToPlay == Players.PlayerOne)
+        {
+            _playerToPlay = Players.PlayerTwo;
+        }
+        else
+        {
+            _playerToPlay = Players.PlayerOne;
+        }
+    }
 }

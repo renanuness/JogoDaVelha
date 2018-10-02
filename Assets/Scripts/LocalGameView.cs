@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class LocalGameView : MonoBehaviour
 {
+    public InputField PlayerName;
+    public InputField MatchName;
 
     private string _matchName;
     private float _timeToUpdate;
@@ -65,8 +67,7 @@ public class LocalGameView : MonoBehaviour
     {
         MyNetworkManager.Discovery.StopBroadcast();
 
-        _matchName = Random.Range(100000, 1000000).ToString();
-        MyNetworkManager.Discovery.broadcastData = _matchName;
+        MyNetworkManager.Discovery.broadcastData = MatchName.text;
         MyNetworkManager.Discovery.StartAsServer();
 
         MyNetworkManager.singleton.StartHost();
@@ -115,7 +116,7 @@ public class LocalGameView : MonoBehaviour
             _currentMatchesData[i] = match;
 
             _currentMatches[i].SetActive(true);
-            _currentMatches[i].GetComponentInChildren<Text>().text = "Join match: " + matchName;
+            _currentMatches[i].GetComponentInChildren<Text>().text =  matchName;
             i++;
         }
         for (; i < _currentMatches.Count; i++)

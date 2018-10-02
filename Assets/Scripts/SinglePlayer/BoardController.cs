@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BoardController : NetworkBehaviour {
+public class BoardController : NetworkBehaviour
+{
 
 
     public  Sprite _circleSprite;
@@ -17,6 +18,8 @@ public class BoardController : NetworkBehaviour {
     private Animator animator;
     private GameObject[] squares = new GameObject[9];
     private static BoardController instance;
+    private Symbol _currentPlayer;
+
 
     public static BoardController Instance
     {
@@ -41,6 +44,7 @@ public class BoardController : NetworkBehaviour {
         GetSquares();
         animator = GetComponent<Animator>();
         animator.SetBool("IsGameOver", false);
+        _currentPlayer = PlayersInfo.p1Symbol;
     }
 	
     private void GetSquares()
