@@ -45,32 +45,7 @@ public class GameManager : NetworkBehaviour
     public void BackMainMenu()
     {
         
-        SceneManager.LoadScene(ScenesList.MainMenu);
+        MyNetworkManager.singleton.ServerChangeScene(ScenesList.MainMenu);
     }
 
-    //Commands
-
-    [Command]
-    void CmdStartGame()
-    {
-        string errorMSG = PlayersInfo.ValidatePlayerInfo();
-        if (errorMSG.Length > 2)
-        {
-            Debug.Log("Show Error");
-            return;
-        }
-        SceneManager.LoadScene(ScenesList.SP_Game);
-    }
-
-    [ClientRpc]
-    void RpcStartGame()
-    {
-        string errorMSG = PlayersInfo.ValidatePlayerInfo();
-        if (errorMSG.Length > 2)
-        {
-            Debug.Log("Show Error");
-            return;
-        }
-        SceneManager.LoadScene(ScenesList.SP_Game);
-    }
 }

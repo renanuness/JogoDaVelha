@@ -1234,6 +1234,7 @@ MonoBehaviour:
   m_OnlineScene: SP_MenuScene
   m_SpawnPrefabs:
   - {fileID: 1913040662367008, guid: a51623f3c36362945b463e6a22131f29, type: 2}
+  - {fileID: 1235299649974074, guid: 443bd007d1c0428498176a01da73b534, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

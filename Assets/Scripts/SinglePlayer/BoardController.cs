@@ -57,15 +57,38 @@ public class BoardController : NetworkBehaviour
 
     public bool MakeMove(int position, Symbol player)
     {
-
+        
         if(board[position] == 0)
         {
             board[position] = (int)player;
             squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+     
+                Debug.Log("Client play");
+                CmdMakeMove(position, player);
+            
             return true;
         }
         return false;
     }
+
+    [Command]
+    void CmdMakeMove(int position, Symbol player)
+    {
+        board[position] = (int)player;
+        squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+        RpcMakeMove(position, player);        
+    }
+
+    [ClientRpc]
+    void RpcMakeMove(int position, Symbol player)
+    {
+        Debug.Log("Server play");
+
+        board[position] = (int)player;
+        squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+        
+    }
+
 
     public int SquareToPosition(GameObject square)
     {

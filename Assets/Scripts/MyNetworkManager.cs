@@ -8,8 +8,21 @@ using UnityEngine.UI;
 public class MyNetworkManager : NetworkManager
 {
 
-
     public static event Action<NetworkConnection> onServerConnect;
+
+    private static MyNetworkManager Instance;
+
+    public static MyNetworkManager _instance
+    {
+        get
+        {
+            if(Instance == null)
+            {
+                Instance = FindObjectOfType<MyNetworkManager>();
+            }
+            return Instance;
+        }
+    }
 
     public static NetworkDiscovery Discovery
     {
@@ -43,5 +56,10 @@ public class MyNetworkManager : NetworkManager
         }
     }
 
+    public void SpawnObject(GameObject obj)
+    {
+        GameObject o = Instantiate(obj);
+        NetworkServer.Spawn(o);
+    }
     
 }

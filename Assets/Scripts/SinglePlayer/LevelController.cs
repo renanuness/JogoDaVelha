@@ -116,6 +116,7 @@ public class AIPlayer : Player
 
 public class HumanPlayer : Player
 {
+    PlayerPrefab _playerOwner { get; set; }
 
     public HumanPlayer(LevelController owner, Symbol symbol, Commander commander, string name) : base(owner, symbol, commander, name)
     {
@@ -157,18 +158,18 @@ public class HumanPlayer : Player
 
 public static class Players
 {
-    public static IPlayer PlayerOne;
-    public static IPlayer PlayerTwo;
+    public static Player PlayerOne;
+    public static Player PlayerTwo;
 }
 
 public static class Factory
 {
-    public static IPlayer CreatePlayer(LevelController levelController, Commander commander, Symbol symbol, string name)
+    public static Player CreatePlayer(LevelController levelController, Commander commander, Symbol symbol, string name)
     {
         return Create(levelController, commander, symbol, name);
     }
 
-    public static IPlayer Create(LevelController levelController, Commander commander, Symbol symbol, string name)
+    public static Player Create(LevelController levelController, Commander commander, Symbol symbol, string name)
     {
         switch (commander)
         {
@@ -184,10 +185,10 @@ public static class Factory
 public class LevelController : NetworkBehaviour {
 
     
-    public IPlayer _playerToPlay;
+    public Player _playerToPlay;
     public bool isGameOver;
     public PlayerPrefab _playerPrefab;
-
+    
     private void Start ()
     {
         InstantiatePlayers();
@@ -207,45 +208,34 @@ public class LevelController : NetworkBehaviour {
         {
             _playerPrefab = FindObjectOfType<PlayerPrefab>();
         }
-       if(_playerPrefab._player != null && _playerPrefab._player == _playerToPlay)
-        {
-            _playerToPlay.Play();
-        }
+        
     }
 
     public void ChangePlayer()
     {
-        if (isServer)
+        if (_playerToPlay == Players.PlayerOne)
         {
-            RpcChangePlayer();
-            return;
+            _playerToPlay = Players.PlayerTwo;
         }
-        CmdChangePlayer();
+        else
+        {
+            _playerToPlay = Players.PlayerOne;
+        }
+        CmdChangePlayer(_playerToPlay.Symbol);
     }
+
 
     //Command
     [Command]
-    void CmdChangePlayer(){
-        if (_playerToPlay == Players.PlayerOne)
-        {
-            _playerToPlay = Players.PlayerTwo;
-        }
-        else
-        {
-            _playerToPlay = Players.PlayerOne;
-        }
+    void CmdChangePlayer(Symbol player){
+        _playerToPlay = Players.PlayerOne.Symbol == player ? Players.PlayerOne : Players.PlayerTwo;
+        RpcChangePlayer(player);
     }
 
     [ClientRpc]
-    void RpcChangePlayer()
+    void RpcChangePlayer(Symbol player)
     {
-        if (_playerToPlay == Players.PlayerOne)
-        {
-            _playerToPlay = Players.PlayerTwo;
-        }
-        else
-        {
-            _playerToPlay = Players.PlayerOne;
-        }
+        _playerToPlay = Players.PlayerOne.Symbol == player ? Players.PlayerOne : Players.PlayerTwo;
+
     }
 }
