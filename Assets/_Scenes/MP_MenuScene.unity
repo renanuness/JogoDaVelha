@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1def1e6978db5fc4ca8eb546aca5623d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerName: {fileID: 1601886391}
-  MatchName: {fileID: 0}
+  PlayerName: {fileID: 2073345735}
+  MatchName: {fileID: 803778343}
   ServerListPanel: {fileID: 847394851}
   MatchButtonTemplate: {fileID: 1482954201786948, guid: ed91754a5147d294183502695cb908f2,
     type: 2}
