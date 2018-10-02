@@ -7,8 +7,8 @@ public class BoardController : NetworkBehaviour
 {
 
 
-    public  Sprite _circleSprite;
-    public Sprite _crossSprite;
+    //TODO:Pensar como declarar a boardUI
+    private BoardUI _boardUI;
 
     public int[] board = new int[9];
 
@@ -33,6 +33,7 @@ public class BoardController : NetworkBehaviour
         }
     }
 
+    
     private void Awake()
     {
         
@@ -41,19 +42,13 @@ public class BoardController : NetworkBehaviour
 
     // Use this for initialization
     void Start () {
-        GetSquares();
+        _boardUI = FindObjectOfType<BoardUI>();
         animator = GetComponent<Animator>();
         animator.SetBool("IsGameOver", false);
         _currentPlayer = PlayersInfo.p1Symbol;
     }
 	
-    private void GetSquares()
-    {
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            squares[i] = transform.GetChild(i).gameObject; 
-        }
-    }
+
 
     public bool MakeMove(int position, Symbol player)
     {
@@ -61,9 +56,9 @@ public class BoardController : NetworkBehaviour
         if(board[position] == 0)
         {
             board[position] = (int)player;
-            squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
-     
+            //squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
                 Debug.Log("Client play");
+                //
                 CmdMakeMove(position, player);
             
             return true;
@@ -75,7 +70,8 @@ public class BoardController : NetworkBehaviour
     void CmdMakeMove(int position, Symbol player)
     {
         board[position] = (int)player;
-        squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+        //squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+
         RpcMakeMove(position, player);        
     }
 
@@ -85,10 +81,9 @@ public class BoardController : NetworkBehaviour
         Debug.Log("Server play");
 
         board[position] = (int)player;
-        squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
-        
+        //squares[position].GetComponent<SpriteRenderer>().sprite = (player == Symbol.CIRCLE ? _circleSprite : _crossSprite);
+        _boardUI.SetSquare(position, player);
     }
-
 
     public int SquareToPosition(GameObject square)
     {
@@ -164,6 +159,7 @@ public class BoardController : NetworkBehaviour
 
         return emptys;
     }
+
     public int GetEmptys(int[] _board)
     {
         int emptys = 0;
@@ -177,7 +173,6 @@ public class BoardController : NetworkBehaviour
 
         return emptys;
     }
-
 
     public void EndGame(Player winner)
     {
